@@ -1,6 +1,6 @@
 # API REST de avistamientos de aves
 
-Trabajo en clase de Ingeniería de Software 2 (ISW-2), Sesión 17.
+
 API REST para registrar avistamientos de aves observados en el campo, hecha con Spring Boot, Spring Data JPA y una base de datos H2 embebida.
 
 **Autor:** TU NOMBRE COMPLETO
