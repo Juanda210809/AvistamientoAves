@@ -2,6 +2,7 @@ package com.avistamientos.aves.service;
 
 import com.avistamientos.aves.model.Avistamiento;
 import com.avistamientos.aves.repository.AvistamientoRepository;
+import com.avistamientos.aves.validacion.ValidadorDeAvistamiento;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,14 +13,12 @@ import java.util.stream.Collectors;
 @Service
 public class AvistamientoService {
 
-	
-	
     private final AvistamientoRepository repo;
+    private final ValidadorDeAvistamiento validador;
 
-    
-    
-    public AvistamientoService(AvistamientoRepository repo) {
+    public AvistamientoService(AvistamientoRepository repo, ValidadorDeAvistamiento validador) {
         this.repo = repo;
+        this.validador = validador;
     }
 
     public List<Avistamiento> listar() {
@@ -31,11 +30,13 @@ public class AvistamientoService {
     }
 
     public Avistamiento crear(Avistamiento a) {
+        validador.validar(a);
         a.setId(null); // el id lo asigna el sistema, ignoramos el que venga en el JSON
         return repo.save(a);
     }
 
     public Optional<Avistamiento> actualizar(Long id, Avistamiento a) {
+        validador.validar(a); // se valida antes de buscar: un PUT inválido a un id inexistente da 400
         return repo.findById(id).map(existente -> {
             existente.setEspecie(a.getEspecie());
             existente.setLugar(a.getLugar());
