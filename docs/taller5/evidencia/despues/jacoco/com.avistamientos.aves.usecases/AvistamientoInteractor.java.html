@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AvistamientoInteractor.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report"></a> &gt; <a href="index.source.html" class="el_package">com.avistamientos.aves.usecases</a> &gt; <span class="el_source">AvistamientoInteractor.java</span></div><h1>AvistamientoInteractor.java</h1><pre class="source lang-java linenums">package com.avistamientos.aves.usecases;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import com.avistamientos.aves.entities.ValidadorDeAvistamiento;
+import com.avistamientos.aves.entities.Avistamiento;
+
+/**
+ * Interactor: implementa los casos de uso de la aplicación (reglas propias de
+ * esta aplicación). No conoce Spring, HTTP ni JPA; solo las entidades y el
+ * puerto {@link AvistamientoGateway}.
+ */
+public class AvistamientoInteractor implements AvistamientoCasosDeUso {
+
+    private final AvistamientoGateway gateway;
+    private final ValidadorDeAvistamiento validador;
+
+<span class="fc" id="L21">    public AvistamientoInteractor(AvistamientoGateway gateway, ValidadorDeAvistamiento validador) {</span>
+<span class="fc" id="L22">        this.gateway = gateway;</span>
+<span class="fc" id="L23">        this.validador = validador;</span>
+<span class="fc" id="L24">    }</span>
+
+    @Override
+    public List&lt;Avistamiento&gt; listar() {
+<span class="fc" id="L28">        return gateway.listarTodos();</span>
+    }
+
+    @Override
+    public Optional&lt;Avistamiento&gt; buscar(Long id) {
+<span class="fc" id="L33">        return gateway.buscarPorId(id);</span>
+    }
+
+    @Override
+    public Avistamiento crear(Avistamiento a) {
+<span class="fc" id="L38">        validador.validar(a);</span>
+<span class="fc" id="L39">        a.setId(null); // el id lo asigna el sistema, ignoramos el que venga en el JSON</span>
+<span class="fc" id="L40">        return gateway.guardar(a);</span>
+    }
+
+    @Override
+    public Optional&lt;Avistamiento&gt; actualizar(Long id, Avistamiento a) {
+<span class="fc" id="L45">        validador.validar(a); // se valida antes de buscar: un PUT inválido a un id inexistente da 400</span>
+<span class="fc" id="L46">        return gateway.buscarPorId(id).map(existente -&gt; {</span>
+<span class="fc" id="L47">            existente.setEspecie(a.getEspecie());</span>
+<span class="fc" id="L48">            existente.setLugar(a.getLugar());</span>
+<span class="fc" id="L49">            existente.setFecha(a.getFecha());</span>
+<span class="fc" id="L50">            existente.setObservador(a.getObservador());</span>
+<span class="fc" id="L51">            return gateway.guardar(existente);</span>
+        });
+    }
+
+    @Override
+    public boolean eliminar(Long id) {
+<span class="fc bfc" id="L57" title="All 2 branches covered.">        if (!gateway.existe(id)) {</span>
+<span class="fc" id="L58">            return false;</span>
+        }
+<span class="fc" id="L60">        gateway.eliminar(id);</span>
+<span class="fc" id="L61">        return true;</span>
+    }
+
+    @Override
+    public Map&lt;String, Long&gt; resumen() {
+<span class="fc" id="L66">        return gateway.listarTodos().stream()</span>
+<span class="fc" id="L67">                .collect(Collectors.groupingBy(Avistamiento::getEspecie, Collectors.counting()));</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ValidadorDeAvistamiento.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report"></a> &gt; <a href="index.source.html" class="el_package">com.avistamientos.aves.entities</a> &gt; <span class="el_source">ValidadorDeAvistamiento.java</span></div><h1>ValidadorDeAvistamiento.java</h1><pre class="source lang-java linenums">package com.avistamientos.aves.entities;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
+
+/**
+ * Regla de negocio del dominio: cuándo un avistamiento es válido.
+ * No depende de ningún framework; la fecha de hoy llega por la interfaz {@link Reloj}.
+ */
+public class ValidadorDeAvistamiento {
+
+    public static final int ESPECIE_MIN = 3;
+    public static final int ESPECIE_MAX = 50;
+
+    private final Reloj reloj;
+
+<span class="fc" id="L17">    public ValidadorDeAvistamiento(Reloj reloj) {</span>
+<span class="fc" id="L18">        this.reloj = reloj;</span>
+<span class="fc" id="L19">    }</span>
+
+    // Se detiene en el primer campo inválido: así cada prueba falla por una sola razón.
+    public void validar(Avistamiento a) {
+<span class="fc" id="L23">        validarEspecie(a.getEspecie());</span>
+<span class="fc" id="L24">        validarFecha(a.getFecha());</span>
+<span class="fc" id="L25">        validarNoVacio(&quot;lugar&quot;, a.getLugar());</span>
+<span class="fc" id="L26">        validarNoVacio(&quot;observador&quot;, a.getObservador());</span>
+<span class="fc" id="L27">    }</span>
+
+    private void validarEspecie(String especie) {
+<span class="pc bpc" id="L30" title="1 of 4 branches missed.">        if (especie == null || especie.isBlank()) {</span>
+<span class="fc" id="L31">            throw new AvistamientoInvalidoException(&quot;especie&quot;, &quot;La especie es obligatoria&quot;);</span>
+        }
+<span class="fc" id="L33">        int largo = especie.trim().length();</span>
+<span class="fc bfc" id="L34" title="All 4 branches covered.">        if (largo &lt; ESPECIE_MIN || largo &gt; ESPECIE_MAX) {</span>
+<span class="fc" id="L35">            throw new AvistamientoInvalidoException(&quot;especie&quot;,</span>
+                    &quot;La especie debe tener entre &quot; + ESPECIE_MIN + &quot; y &quot; + ESPECIE_MAX + &quot; caracteres&quot;);
+        }
+<span class="fc" id="L38">    }</span>
+
+    private void validarFecha(String texto) {
+<span class="pc bpc" id="L41" title="1 of 4 branches missed.">        if (texto == null || texto.isBlank()) {</span>
+<span class="fc" id="L42">            throw new AvistamientoInvalidoException(&quot;fecha&quot;, &quot;La fecha es obligatoria&quot;);</span>
+        }
+        LocalDate fecha;
+        try {
+<span class="fc" id="L46">            fecha = LocalDate.parse(texto); // acepta solo AAAA-MM-DD y fechas que existan</span>
+<span class="fc" id="L47">        } catch (DateTimeParseException e) {</span>
+<span class="fc" id="L48">            throw new AvistamientoInvalidoException(&quot;fecha&quot;, &quot;La fecha debe tener formato AAAA-MM-DD&quot;);</span>
+<span class="fc" id="L49">        }</span>
+<span class="fc bfc" id="L50" title="All 2 branches covered.">        if (fecha.isAfter(reloj.hoy())) {</span>
+<span class="fc" id="L51">            throw new AvistamientoInvalidoException(&quot;fecha&quot;, &quot;La fecha no puede ser posterior a hoy&quot;);</span>
+        }
+<span class="fc" id="L53">    }</span>
+
+    private void validarNoVacio(String campo, String valor) {
+<span class="pc bpc" id="L56" title="1 of 4 branches missed.">        if (valor == null || valor.isBlank()) {</span>
+<span class="fc" id="L57">            throw new AvistamientoInvalidoException(campo, &quot;El campo &quot; + campo + &quot; es obligatorio&quot;);</span>
+        }
+<span class="fc" id="L59">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
