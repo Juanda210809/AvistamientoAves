@@ -14,7 +14,8 @@ import com.avistamientos.aves.entities.Avistamiento;
  * Es distinta de la entidad del dominio: los datos de la base no cruzan hacia
  * los círculos interiores. Los métodos desde/haciaDominio hacen la conversión.
  * Se conserva el nombre de tabla "avistamiento" para no perder los datos ya
- * guardados en data/.
+ * guardados en data/. Hibernate accede a los campos directamente; los
+ * setters se usan para sembrar datos en la prueba de integración.
  */
 @Entity
 @Table(name = "avistamiento")
@@ -50,36 +51,16 @@ public class AvistamientoJpa {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getEspecie() {
-        return especie;
-    }
-
     public void setEspecie(String especie) {
         this.especie = especie;
-    }
-
-    public String getLugar() {
-        return lugar;
     }
 
     public void setLugar(String lugar) {
         this.lugar = lugar;
     }
 
-    public String getFecha() {
-        return fecha;
-    }
-
     public void setFecha(String fecha) {
         this.fecha = fecha;
-    }
-
-    public String getObservador() {
-        return observador;
     }
 
     public void setObservador(String observador) {
