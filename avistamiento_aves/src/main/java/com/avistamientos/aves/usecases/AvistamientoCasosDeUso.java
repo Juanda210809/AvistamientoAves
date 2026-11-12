@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import com.avistamientos.aves.model.Avistamiento;
+import com.avistamientos.aves.entities.Avistamiento;
 
 /**
  * Puerto de entrada (input boundary) de los casos de uso.

@@ -6,7 +6,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.avistamientos.aves.entities.ValidadorDeAvistamiento;
-import com.avistamientos.aves.model.Avistamiento;
+import com.avistamientos.aves.entities.Avistamiento;
 
 /**
  * Interactor: implementa los casos de uso de la aplicación (reglas propias de

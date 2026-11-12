@@ -3,7 +3,7 @@ package com.avistamientos.aves.usecases;
 import java.util.List;
 import java.util.Optional;
 
-import com.avistamientos.aves.model.Avistamiento;
+import com.avistamientos.aves.entities.Avistamiento;
 
 /**
  * Puerto de salida (gateway) de los casos de uso.

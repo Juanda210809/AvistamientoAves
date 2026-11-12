@@ -1,37 +1,31 @@
-package com.avistamientos.aves.model;
+package com.avistamientos.aves.entities;
 
-import jakarta.persistence.Entity;
-
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-
-@Entity
+/**
+ * Entidad del dominio: un avistamiento de un ave.
+ *
+ * Es un objeto Java simple, sin anotaciones de JPA ni de Spring. La forma en
+ * que se guarda en la base de datos vive en el adaptador de persistencia
+ * (interfaceadapters/gateways/AvistamientoJpa).
+ */
 public class Avistamiento {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
-
-  
     private String especie;
-
     private String lugar;
-
-
     private String fecha;
-
     private String observador;
 
     public Avistamiento() {
     }
-    
-    
-    /*
-     * Metodos Getters y setters
-     */
-    
+
+    public Avistamiento(Long id, String especie, String lugar, String fecha, String observador) {
+        this.id = id;
+        this.especie = especie;
+        this.lugar = lugar;
+        this.fecha = fecha;
+        this.observador = observador;
+    }
+
     public Long getId() {
         return id;
     }

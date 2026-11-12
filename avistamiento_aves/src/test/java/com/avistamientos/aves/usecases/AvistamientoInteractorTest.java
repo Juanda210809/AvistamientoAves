@@ -23,7 +23,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.avistamientos.aves.model.Avistamiento;
+import com.avistamientos.aves.entities.Avistamiento;
 import com.avistamientos.aves.entities.AvistamientoInvalidoException;
 import com.avistamientos.aves.entities.ValidadorDeAvistamiento;
 

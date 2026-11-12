@@ -3,8 +3,10 @@ package com.avistamientos.aves.entities;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
-import com.avistamientos.aves.model.Avistamiento;
-
+/**
+ * Regla de negocio del dominio: cuándo un avistamiento es válido.
+ * No depende de ningún framework; la fecha de hoy llega por la interfaz {@link Reloj}.
+ */
 public class ValidadorDeAvistamiento {
 
     public static final int ESPECIE_MIN = 3;

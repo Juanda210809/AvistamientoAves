@@ -1,6 +1,6 @@
 package com.avistamientos.aves.controller;
 
-import com.avistamientos.aves.model.Avistamiento;
+import com.avistamientos.aves.entities.Avistamiento;
 
 import com.avistamientos.aves.usecases.AvistamientoCasosDeUso;
 

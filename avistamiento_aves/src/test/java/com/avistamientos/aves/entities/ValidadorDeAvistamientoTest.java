@@ -8,8 +8,6 @@ import java.time.LocalDate;
 
 import org.junit.jupiter.api.Test;
 
-import com.avistamientos.aves.model.Avistamiento;
-
 class ValidadorDeAvistamientoTest {
 
     private static final LocalDate HOY = LocalDate.of(2026, 10, 14);
