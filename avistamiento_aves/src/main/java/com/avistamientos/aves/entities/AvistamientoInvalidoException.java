@@ -1,4 +1,4 @@
-package com.avistamientos.aves.validacion;
+package com.avistamientos.aves.entities;
 
 public class AvistamientoInvalidoException extends RuntimeException {
     private final String campo;

@@ -1,4 +1,4 @@
-package com.avistamientos.aves.validacion;
+package com.avistamientos.aves.entities;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;

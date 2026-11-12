@@ -25,8 +25,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.avistamientos.aves.model.Avistamiento;
 import com.avistamientos.aves.repository.AvistamientoRepository;
-import com.avistamientos.aves.validacion.AvistamientoInvalidoException;
-import com.avistamientos.aves.validacion.ValidadorDeAvistamiento;
+import com.avistamientos.aves.entities.AvistamientoInvalidoException;
+import com.avistamientos.aves.entities.ValidadorDeAvistamiento;
 
 @ExtendWith(MockitoExtension.class)
 class AvistamientoServiceTest {

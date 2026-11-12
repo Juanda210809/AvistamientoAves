@@ -1,4 +1,4 @@
-package com.avistamientos.aves.validacion;
+package com.avistamientos.aves.entities;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;

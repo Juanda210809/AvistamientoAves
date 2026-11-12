@@ -1,6 +1,8 @@
-package com.avistamientos.aves.validacion;
+package com.avistamientos.aves.interfaceadapters.controllers;
 
 import java.util.Map;
+
+import com.avistamientos.aves.entities.AvistamientoInvalidoException;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

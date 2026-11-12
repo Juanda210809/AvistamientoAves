@@ -1,6 +1,8 @@
-package com.avistamientos.aves.validacion;
+package com.avistamientos.aves.frameworks;
 
 import java.time.LocalDate;
+
+import com.avistamientos.aves.entities.Reloj;
 import org.springframework.stereotype.Component;
 
 @Component

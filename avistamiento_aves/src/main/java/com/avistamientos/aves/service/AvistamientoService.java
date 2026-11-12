@@ -2,7 +2,7 @@ package com.avistamientos.aves.service;
 
 import com.avistamientos.aves.model.Avistamiento;
 import com.avistamientos.aves.repository.AvistamientoRepository;
-import com.avistamientos.aves.validacion.ValidadorDeAvistamiento;
+import com.avistamientos.aves.entities.ValidadorDeAvistamiento;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
