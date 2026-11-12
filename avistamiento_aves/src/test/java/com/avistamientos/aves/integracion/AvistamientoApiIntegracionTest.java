@@ -15,8 +15,8 @@ import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.avistamientos.aves.model.Avistamiento;
-import com.avistamientos.aves.repository.AvistamientoRepository;
+import com.avistamientos.aves.interfaceadapters.gateways.AvistamientoJpa;
+import com.avistamientos.aves.interfaceadapters.gateways.AvistamientoJpaRepository;
 import com.jayway.jsonpath.JsonPath;
 
 @SpringBootTest
@@ -27,7 +27,7 @@ class AvistamientoApiIntegracionTest {
     private MockMvc mockMvc;
 
     @Autowired
-    private AvistamientoRepository repo;
+    private AvistamientoJpaRepository repo;
 
     // Independencia: cada prueba arranca con la base vacía y prepara sus propios datos
     @BeforeEach
@@ -35,8 +35,8 @@ class AvistamientoApiIntegracionTest {
         repo.deleteAll();
     }
 
-    private Avistamiento guardar(String especie, String lugar) {
-        Avistamiento a = new Avistamiento();
+    private AvistamientoJpa guardar(String especie, String lugar) {
+        AvistamientoJpa a = new AvistamientoJpa();
         a.setEspecie(especie);
         a.setLugar(lugar);
         a.setFecha("2026-10-01");
@@ -75,7 +75,7 @@ class AvistamientoApiIntegracionTest {
 
     @Test
     void verDevuelve200ConTodosLosCamposDelAvistamiento() throws Exception {
-        Avistamiento guardado = guardar("colibri", "Chingaza");
+        AvistamientoJpa guardado = guardar("colibri", "Chingaza");
 
         mockMvc.perform(get("/avistamientos/" + guardado.getId()))
                 .andExpect(status().isOk())
@@ -150,7 +150,7 @@ class AvistamientoApiIntegracionTest {
 
     @Test
     void actualizarDevuelve200YLosCambiosQuedanGuardados() throws Exception {
-        Avistamiento guardado = guardar("colibri", "Chingaza");
+        AvistamientoJpa guardado = guardar("colibri", "Chingaza");
 
         mockMvc.perform(put("/avistamientos/" + guardado.getId())
                         .contentType(MediaType.APPLICATION_JSON)
@@ -173,7 +173,7 @@ class AvistamientoApiIntegracionTest {
 
     @Test
     void actualizarConDatosInvalidosDevuelve400YNoModificaElOriginal() throws Exception {
-        Avistamiento guardado = guardar("colibri", "Chingaza");
+        AvistamientoJpa guardado = guardar("colibri", "Chingaza");
 
         mockMvc.perform(put("/avistamientos/" + guardado.getId())
                         .contentType(MediaType.APPLICATION_JSON)
@@ -190,7 +190,7 @@ class AvistamientoApiIntegracionTest {
 
     @Test
     void eliminarDevuelve204YDespuesElGetDevuelve404() throws Exception {
-        Avistamiento guardado = guardar("colibri", "Chingaza");
+        AvistamientoJpa guardado = guardar("colibri", "Chingaza");
 
         mockMvc.perform(delete("/avistamientos/" + guardado.getId()))
                 .andExpect(status().isNoContent());

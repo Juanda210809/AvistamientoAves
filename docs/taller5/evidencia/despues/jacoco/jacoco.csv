@@ -1,0 +1,15 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+,com.avistamientos.aves.interfaceadapters.controllers,AvistamientoRequest,0,28,0,0,0,2,0,2,0,2
+,com.avistamientos.aves.interfaceadapters.controllers,ManejadorDeErrores,0,13,0,0,0,3,0,2,0,2
+,com.avistamientos.aves.interfaceadapters.controllers,AvistamientoController,0,69,0,2,0,18,0,8,0,7
+,com.avistamientos.aves.interfaceadapters.controllers,AvistamientoResponse,0,43,0,0,0,13,0,7,0,7
+,com.avistamientos.aves.interfaceadapters.gateways,AvistamientoJpa,0,62,0,0,0,19,0,8,0,8
+,com.avistamientos.aves.interfaceadapters.gateways,AvistamientoGatewayJpa,0,39,0,0,0,9,0,6,0,6
+,com.avistamientos.aves.entities,Avistamiento,0,56,0,0,0,24,0,12,0,12
+,com.avistamientos.aves.entities,AvistamientoInvalidoException,0,10,0,0,0,4,0,2,0,2
+,com.avistamientos.aves.entities,ValidadorDeAvistamiento,0,101,3,15,0,26,3,11,0,5
+,com.avistamientos.aves.usecases,AvistamientoInteractor,0,87,0,2,0,22,0,9,0,8
+,com.avistamientos.aves,AvesApplication,5,3,0,0,2,1,1,1,1,1
+,com.avistamientos.aves,ServletInitializer,12,0,0,0,2,0,2,0,2,0
+,com.avistamientos.aves.frameworks,RelojSistema,0,5,0,0,0,2,0,2,0,2
+,com.avistamientos.aves.frameworks,ConfiguracionCasosDeUso,0,14,0,0,0,3,0,3,0,3

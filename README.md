@@ -299,37 +299,30 @@ Las pruebas de integración usan una base H2 en memoria (`src/test/resources/app
 
 |---|---|---|
 
-| `validacion/` | Unitarias | `ValidadorDeAvistamiento`, con `RelojFijo` (stub) |
+| `entities/` | Unitarias | `ValidadorDeAvistamiento`, con `RelojFijo` (stub) |
 
-| `service/` | Unitarias | `AvistamientoService`, con un doble (Mockito) del repositorio |
+| `usecases/` | Unitarias | `AvistamientoInteractor`, con un doble (Mockito) de `AvistamientoGateway` |
+
+| `arquitectura/` | Arquitectura | Que se cumpla la regla de dependencia de Clean Architecture |
 
 | `integracion/` | Integración | Los endpoints por HTTP con MockMvc y H2 en memoria |
 
 
 
-\## Estructura del proyecto
-
-
+\## Estructura del proyecto (Clean Architecture, Taller 5)
 
 ```
-
 com.avistamientos.aves
-
-├── AvesApplication.java        Clase principal
-
-├── model/Avistamiento.java     Entidad
-
-├── validacion/                 Validador, Reloj y manejo de errores 400
-
-├── repository/                 Acceso a la base de datos (Spring Data JPA)
-
-├── service/                    Lógica de negocio
-
-└── controller/                 Endpoints REST y códigos de estado
-
+├── AvesApplication.java      Main (frameworks y drivers)
+├── entities/                 Avistamiento, ValidadorDeAvistamiento, Reloj, excepción (sin Spring ni JPA)
+├── usecases/                 AvistamientoInteractor + puertos AvistamientoCasosDeUso y AvistamientoGateway
+├── interfaceadapters/
+│   ├── controllers/          REST, DTO de entrada/salida y manejo de errores 400
+│   └── gateways/             AvistamientoGatewayJpa, entidad JPA y repositorio Spring Data
+└── frameworks/               ConfiguracionCasosDeUso (ensamblaje) y RelojSistema
 ```
 
-
+Las dependencias del código apuntan siempre hacia adentro (frameworks → adaptadores → casos de uso → entidades). La prueba `arquitectura/ReglaDeDependenciaTest` lo verifica. El documento del taller está en [`docs/taller5/Taller5_Clean_Architecture.md`](docs/taller5/Taller5_Clean_Architecture.md).
 
 \## Tecnologías
 
