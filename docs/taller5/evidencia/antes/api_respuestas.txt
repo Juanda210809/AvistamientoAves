@@ -1,0 +1,56 @@
+$ -X POST http://localhost:8080/avistamientos -H Content-Type: application/json -d {"especie":"colibri","lugar":"Chingaza","fecha":"2026-09-29","observador":"Ana"}
+{"especie":"colibri","fecha":"2026-09-29","id":1,"lugar":"Chingaza","observador":"Ana"}
+HTTP 201
+
+$ -X POST http://localhost:8080/avistamientos -H Content-Type: application/json -d {"especie":"aguila","lugar":"Sumapaz","fecha":"2026-10-01","observador":"Luis"}
+{"especie":"aguila","fecha":"2026-10-01","id":2,"lugar":"Sumapaz","observador":"Luis"}
+HTTP 201
+
+$ -X POST http://localhost:8080/avistamientos -H Content-Type: application/json -d {"especie":"ab","lugar":"Chingaza","fecha":"2026-09-29","observador":"Ana"}
+{"error":"La especie debe tener entre 3 y 50 caracteres","campo":"especie"}
+HTTP 400
+
+$ -X POST http://localhost:8080/avistamientos -H Content-Type: application/json -d {"especie":"colibri","lugar":"Chingaza","fecha":"2099-01-01","observador":"Ana"}
+{"error":"La fecha no puede ser posterior a hoy","campo":"fecha"}
+HTTP 400
+
+$ http://localhost:8080/avistamientos
+[{"especie":"colibri","fecha":"2026-09-29","id":1,"lugar":"Chingaza","observador":"Ana"},{"especie":"aguila","fecha":"2026-10-01","id":2,"lugar":"Sumapaz","observador":"Luis"}]
+HTTP 200
+
+$ http://localhost:8080/avistamientos/1
+{"especie":"colibri","fecha":"2026-09-29","id":1,"lugar":"Chingaza","observador":"Ana"}
+HTTP 200
+
+$ http://localhost:8080/avistamientos/999
+
+HTTP 404
+
+$ -X PUT http://localhost:8080/avistamientos/1 -H Content-Type: application/json -d {"especie":"colibri","lugar":"Sumapaz","fecha":"2026-09-30","observador":"Ana"}
+{"especie":"colibri","fecha":"2026-09-30","id":1,"lugar":"Sumapaz","observador":"Ana"}
+HTTP 200
+
+$ -X PUT http://localhost:8080/avistamientos/999 -H Content-Type: application/json -d {"especie":"colibri","lugar":"Sumapaz","fecha":"2026-09-30","observador":"Ana"}
+
+HTTP 404
+
+$ -X PUT http://localhost:8080/avistamientos/1 -H Content-Type: application/json -d {"especie":"ab","lugar":"Sumapaz","fecha":"2026-09-30","observador":"Ana"}
+{"error":"La especie debe tener entre 3 y 50 caracteres","campo":"especie"}
+HTTP 400
+
+$ http://localhost:8080/avistamientos/resumen
+{"colibri":1,"aguila":1}
+HTTP 200
+
+$ -X DELETE http://localhost:8080/avistamientos/2
+
+HTTP 204
+
+$ -X DELETE http://localhost:8080/avistamientos/2
+
+HTTP 404
+
+$ http://localhost:8080/avistamientos
+[{"especie":"colibri","fecha":"2026-09-30","id":1,"lugar":"Sumapaz","observador":"Ana"}]
+HTTP 200
+
