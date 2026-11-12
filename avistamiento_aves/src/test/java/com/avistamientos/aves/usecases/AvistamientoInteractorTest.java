@@ -1,4 +1,4 @@
-package com.avistamientos.aves.service;
+package com.avistamientos.aves.usecases;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -24,23 +24,22 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.avistamientos.aves.model.Avistamiento;
-import com.avistamientos.aves.repository.AvistamientoRepository;
 import com.avistamientos.aves.entities.AvistamientoInvalidoException;
 import com.avistamientos.aves.entities.ValidadorDeAvistamiento;
 
 @ExtendWith(MockitoExtension.class)
-class AvistamientoServiceTest {
+class AvistamientoInteractorTest {
 
     @Mock
-    private AvistamientoRepository repo;
+    private AvistamientoGateway gateway;
 
-    private AvistamientoService service;
+    private AvistamientoInteractor service;
 
     @BeforeEach
     void preparar() {
         // Reloj es una interfaz con un solo método: un lambda hace de stub con fecha fija
         var validador = new ValidadorDeAvistamiento(() -> LocalDate.of(2026, 10, 14));
-        service = new AvistamientoService(repo, validador);
+        service = new AvistamientoInteractor(gateway, validador);
     }
 
     private Avistamiento valido(String especie) {
@@ -57,12 +56,12 @@ class AvistamientoServiceTest {
         // Arrange
         Avistamiento a = valido("colibri");
         a.setId(99L);
-        when(repo.save(any())).thenAnswer(inv -> inv.getArgument(0));
+        when(gateway.guardar(any())).thenAnswer(inv -> inv.getArgument(0));
         // Act
         service.crear(a);
         // Assert
         ArgumentCaptor<Avistamiento> capturado = ArgumentCaptor.forClass(Avistamiento.class);
-        verify(repo).save(capturado.capture());
+        verify(gateway).guardar(capturado.capture());
         assertNull(capturado.getValue().getId());
     }
 
@@ -73,7 +72,7 @@ class AvistamientoServiceTest {
         // Act
         assertThrows(AvistamientoInvalidoException.class, () -> service.crear(a));
         // Assert
-        verifyNoInteractions(repo);
+        verifyNoInteractions(gateway);
     }
 
     @Test
@@ -83,8 +82,8 @@ class AvistamientoServiceTest {
         existente.setId(1L);
         Avistamiento nuevo = valido("colibri");
         nuevo.setLugar("Sumapaz");
-        when(repo.findById(1L)).thenReturn(Optional.of(existente));
-        when(repo.save(any())).thenAnswer(inv -> inv.getArgument(0));
+        when(gateway.buscarPorId(1L)).thenReturn(Optional.of(existente));
+        when(gateway.guardar(any())).thenAnswer(inv -> inv.getArgument(0));
         // Act
         Optional<Avistamiento> resultado = service.actualizar(1L, nuevo);
         // Assert
@@ -97,12 +96,12 @@ class AvistamientoServiceTest {
     @Test
     void actualizarDevuelveVacioYNoGuardaCuandoElIdNoExiste() {
         // Arrange
-        when(repo.findById(5L)).thenReturn(Optional.empty());
+        when(gateway.buscarPorId(5L)).thenReturn(Optional.empty());
         // Act
         Optional<Avistamiento> resultado = service.actualizar(5L, valido("colibri"));
         // Assert
         assertTrue(resultado.isEmpty());
-        verify(repo, never()).save(any());
+        verify(gateway, never()).guardar(any());
     }
 
     @Test
@@ -112,35 +111,35 @@ class AvistamientoServiceTest {
         // Act
         assertThrows(AvistamientoInvalidoException.class, () -> service.actualizar(5L, invalido));
         // Assert: la validación va antes de buscar (400 antes que 404)
-        verifyNoInteractions(repo);
+        verifyNoInteractions(gateway);
     }
 
     @Test
     void eliminarBorraYDevuelveTrueCuandoElIdExiste() {
         // Arrange
-        when(repo.existsById(9L)).thenReturn(true);
+        when(gateway.existe(9L)).thenReturn(true);
         // Act
         boolean resultado = service.eliminar(9L);
         // Assert
         assertTrue(resultado);
-        verify(repo).deleteById(9L);
+        verify(gateway).eliminar(9L);
     }
 
     @Test
     void eliminarDevuelveFalseYNoBorraCuandoElIdNoExiste() {
         // Arrange
-        when(repo.existsById(9L)).thenReturn(false);
+        when(gateway.existe(9L)).thenReturn(false);
         // Act
         boolean resultado = service.eliminar(9L);
         // Assert
         assertFalse(resultado);
-        verify(repo, never()).deleteById(any());
+        verify(gateway, never()).eliminar(any());
     }
 
     @Test
     void resumenCuentaLosAvistamientosPorEspecie() {
         // Arrange
-        when(repo.findAll()).thenReturn(
+        when(gateway.listarTodos()).thenReturn(
                 List.of(valido("colibri"), valido("colibri"), valido("aguila")));
         // Act
         Map<String, Long> resumen = service.resumen();

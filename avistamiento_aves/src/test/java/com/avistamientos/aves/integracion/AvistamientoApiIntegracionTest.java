@@ -16,7 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.avistamientos.aves.model.Avistamiento;
-import com.avistamientos.aves.repository.AvistamientoRepository;
+import com.avistamientos.aves.interfaceadapters.gateways.AvistamientoJpaRepository;
 import com.jayway.jsonpath.JsonPath;
 
 @SpringBootTest
@@ -27,7 +27,7 @@ class AvistamientoApiIntegracionTest {
     private MockMvc mockMvc;
 
     @Autowired
-    private AvistamientoRepository repo;
+    private AvistamientoJpaRepository repo;
 
     // Independencia: cada prueba arranca con la base vacía y prepara sus propios datos
     @BeforeEach

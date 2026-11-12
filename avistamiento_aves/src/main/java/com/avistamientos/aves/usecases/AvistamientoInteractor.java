@@ -1,61 +1,69 @@
-package com.avistamientos.aves.service;
-
-import com.avistamientos.aves.model.Avistamiento;
-import com.avistamientos.aves.repository.AvistamientoRepository;
-import com.avistamientos.aves.entities.ValidadorDeAvistamiento;
-import org.springframework.stereotype.Service;
+package com.avistamientos.aves.usecases;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@Service
-public class AvistamientoService {
+import com.avistamientos.aves.entities.ValidadorDeAvistamiento;
+import com.avistamientos.aves.model.Avistamiento;
 
-    private final AvistamientoRepository repo;
+/**
+ * Interactor: implementa los casos de uso de la aplicación (reglas propias de
+ * esta aplicación). No conoce Spring, HTTP ni JPA; solo las entidades y el
+ * puerto {@link AvistamientoGateway}.
+ */
+public class AvistamientoInteractor implements AvistamientoCasosDeUso {
+
+    private final AvistamientoGateway gateway;
     private final ValidadorDeAvistamiento validador;
 
-    public AvistamientoService(AvistamientoRepository repo, ValidadorDeAvistamiento validador) {
-        this.repo = repo;
+    public AvistamientoInteractor(AvistamientoGateway gateway, ValidadorDeAvistamiento validador) {
+        this.gateway = gateway;
         this.validador = validador;
     }
 
+    @Override
     public List<Avistamiento> listar() {
-        return repo.findAll();
+        return gateway.listarTodos();
     }
 
+    @Override
     public Optional<Avistamiento> buscar(Long id) {
-        return repo.findById(id);
+        return gateway.buscarPorId(id);
     }
 
+    @Override
     public Avistamiento crear(Avistamiento a) {
         validador.validar(a);
         a.setId(null); // el id lo asigna el sistema, ignoramos el que venga en el JSON
-        return repo.save(a);
+        return gateway.guardar(a);
     }
 
+    @Override
     public Optional<Avistamiento> actualizar(Long id, Avistamiento a) {
         validador.validar(a); // se valida antes de buscar: un PUT inválido a un id inexistente da 400
-        return repo.findById(id).map(existente -> {
+        return gateway.buscarPorId(id).map(existente -> {
             existente.setEspecie(a.getEspecie());
             existente.setLugar(a.getLugar());
             existente.setFecha(a.getFecha());
             existente.setObservador(a.getObservador());
-            return repo.save(existente);
+            return gateway.guardar(existente);
         });
     }
 
+    @Override
     public boolean eliminar(Long id) {
-        if (!repo.existsById(id)) {
+        if (!gateway.existe(id)) {
             return false;
         }
-        repo.deleteById(id);
+        gateway.eliminar(id);
         return true;
     }
 
+    @Override
     public Map<String, Long> resumen() {
-        return repo.findAll().stream()
+        return gateway.listarTodos().stream()
                 .collect(Collectors.groupingBy(Avistamiento::getEspecie, Collectors.counting()));
     }
 }

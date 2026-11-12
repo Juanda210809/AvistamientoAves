@@ -2,7 +2,7 @@ package com.avistamientos.aves.controller;
 
 import com.avistamientos.aves.model.Avistamiento;
 
-import com.avistamientos.aves.service.AvistamientoService;
+import com.avistamientos.aves.usecases.AvistamientoCasosDeUso;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,9 +15,9 @@ import java.util.Map;
 @RequestMapping("/avistamientos")
 public class AvistamientoController {
 
-    private final AvistamientoService service;
+    private final AvistamientoCasosDeUso service;
 
-    public AvistamientoController(AvistamientoService service) {
+    public AvistamientoController(AvistamientoCasosDeUso service) {
     
         this.service = service;
     }

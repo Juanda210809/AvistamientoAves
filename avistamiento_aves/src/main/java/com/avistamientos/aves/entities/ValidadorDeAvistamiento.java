@@ -3,11 +3,8 @@ package com.avistamientos.aves.entities;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
-import org.springframework.stereotype.Component;
-
 import com.avistamientos.aves.model.Avistamiento;
 
-@Component
 public class ValidadorDeAvistamiento {
 
     public static final int ESPECIE_MIN = 3;
