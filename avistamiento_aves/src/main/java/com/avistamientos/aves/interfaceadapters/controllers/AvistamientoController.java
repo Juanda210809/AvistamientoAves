@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.avistamientos.aves.usecases.AvistamientoCasosDeUso;
 
 /**
- * Adaptador de entrada HTTP. Traduce la petición a una llamada al caso de uso
- * y el resultado a un código de estado y un JSON. No contiene reglas de negocio.
+ * Recibe las peticiones HTTP, llama al caso de uso y arma la respuesta
+ * (código de estado + JSON). Las reglas no van aquí.
  */
 @RestController
 @RequestMapping("/avistamientos")

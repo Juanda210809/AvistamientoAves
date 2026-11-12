@@ -9,9 +9,9 @@ import com.avistamientos.aves.entities.ValidadorDeAvistamiento;
 import com.avistamientos.aves.entities.Avistamiento;
 
 /**
- * Interactor: implementa los casos de uso de la aplicación (reglas propias de
- * esta aplicación). No conoce Spring, HTTP ni JPA; solo las entidades y el
- * puerto {@link AvistamientoGateway}.
+ * Aquí están los casos de uso de la API (listar, crear, actualizar...).
+ * Ojo: esta clase no sabe nada de Spring, HTTP o JPA. Solo usa las entidades
+ * y la interfaz {@link AvistamientoGateway} para guardar.
  */
 public class AvistamientoInteractor implements AvistamientoCasosDeUso {
 

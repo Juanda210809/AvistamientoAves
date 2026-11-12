@@ -10,11 +10,9 @@ import com.avistamientos.aves.usecases.AvistamientoGateway;
 import com.avistamientos.aves.usecases.AvistamientoInteractor;
 
 /**
- * Ensamblaje (parte "Main" del círculo de frameworks y drivers).
- *
- * Las entidades y los casos de uso no llevan anotaciones de Spring; aquí se
- * crean y se conectan con sus implementaciones concretas. Es el único lugar
- * que conoce a la vez el núcleo y los detalles.
+ * Como el validador y el interactor ya no tienen @Component ni @Service,
+ * los creo aquí a mano. Es el único sitio que conoce el núcleo y también
+ * las clases concretas (el "Main" del que habla Martin).
  */
 @Configuration
 public class ConfiguracionCasosDeUso {

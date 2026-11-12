@@ -11,9 +11,9 @@ import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 
 /**
- * Verifica la regla de dependencia de Clean Architecture leyendo los imports
- * del código fuente: ningún círculo interior puede nombrar algo de un círculo
- * exterior. Si alguien rompe la regla, esta prueba falla.
+ * Revisa los imports del código para comprobar la regla de dependencia:
+ * un círculo de adentro no puede importar nada de uno de afuera.
+ * Si alguien la rompe, esta prueba lo avisa.
  */
 class ReglaDeDependenciaTest {
 

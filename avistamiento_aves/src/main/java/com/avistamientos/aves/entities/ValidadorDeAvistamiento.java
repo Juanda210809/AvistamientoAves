@@ -4,8 +4,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
 /**
- * Regla de negocio del dominio: cuándo un avistamiento es válido.
- * No depende de ningún framework; la fecha de hoy llega por la interfaz {@link Reloj}.
+ * La regla de negocio: qué hace válido a un avistamiento.
+ * La fecha de hoy la pide a {@link Reloj}, así se puede probar con una fecha fija.
  */
 public class ValidadorDeAvistamiento {
 

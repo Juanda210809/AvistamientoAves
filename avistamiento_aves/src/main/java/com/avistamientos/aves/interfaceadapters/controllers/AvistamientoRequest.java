@@ -3,9 +3,8 @@ package com.avistamientos.aves.interfaceadapters.controllers;
 import com.avistamientos.aves.entities.Avistamiento;
 
 /**
- * Cuerpo JSON que llega en POST y PUT. Es una estructura de datos simple:
- * el controlador la convierte en la entidad del dominio antes de llamar al
- * caso de uso. Si el JSON trae un "id", se ignora.
+ * Lo que llega en el cuerpo de POST y PUT. El controlador lo pasa a entidad
+ * antes de llamar al caso de uso. Si viene un "id" en el JSON, no se usa.
  */
 public record AvistamientoRequest(String especie, String lugar, String fecha, String observador) {
 

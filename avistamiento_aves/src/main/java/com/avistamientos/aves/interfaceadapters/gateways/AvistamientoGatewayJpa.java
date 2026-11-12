@@ -9,9 +9,8 @@ import com.avistamientos.aves.entities.Avistamiento;
 import com.avistamientos.aves.usecases.AvistamientoGateway;
 
 /**
- * Adaptador de persistencia: implementa el puerto de salida que definió el
- * caso de uso, usando Spring Data JPA. Convierte entre la entidad del dominio
- * y la fila de la base ({@link AvistamientoJpa}).
+ * Implementa el puerto AvistamientoGateway con Spring Data JPA.
+ * Antes de guardar convierte a {@link AvistamientoJpa} y al leer devuelve la entidad.
  */
 @Component
 public class AvistamientoGatewayJpa implements AvistamientoGateway {

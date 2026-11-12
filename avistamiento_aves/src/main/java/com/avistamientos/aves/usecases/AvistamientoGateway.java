@@ -6,12 +6,11 @@ import java.util.Optional;
 import com.avistamientos.aves.entities.Avistamiento;
 
 /**
- * Puerto de salida (gateway) de los casos de uso.
+ * Puerto de salida: lo que el caso de uso necesita para guardar y consultar.
  *
- * Lo define el círculo de casos de uso con lo que necesita guardar y consultar,
- * y lo implementa un adaptador de un círculo exterior. Así el caso de uso no
- * depende de la base de datos: la dependencia apunta hacia adentro
- * (inversión de dependencias).
+ * La interfaz vive en usecases y la implementación está afuera
+ * (AvistamientoGatewayJpa). Por eso el caso de uso no depende de la base de
+ * datos: la flecha apunta hacia adentro.
  */
 public interface AvistamientoGateway {
 

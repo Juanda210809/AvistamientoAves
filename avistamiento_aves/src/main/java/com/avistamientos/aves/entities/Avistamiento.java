@@ -1,11 +1,10 @@
 package com.avistamientos.aves.entities;
 
 /**
- * Entidad del dominio: un avistamiento de un ave.
+ * Entidad del dominio: un avistamiento.
  *
- * Es un objeto Java simple, sin anotaciones de JPA ni de Spring. La forma en
- * que se guarda en la base de datos vive en el adaptador de persistencia
- * (interfaceadapters/gateways/AvistamientoJpa).
+ * Es una clase normal, sin @Entity ni nada de Spring. Cómo se guarda en la
+ * base lo decide AvistamientoJpa, en interfaceadapters/gateways.
  */
 public class Avistamiento {
 

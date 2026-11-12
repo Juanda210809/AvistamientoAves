@@ -9,13 +9,12 @@ import jakarta.persistence.Table;
 import com.avistamientos.aves.entities.Avistamiento;
 
 /**
- * Forma en que un avistamiento se guarda en la base de datos (fila de la tabla).
+ * La fila de la tabla en la base de datos. No es la misma clase que la
+ * entidad del dominio; desdeDominio y haciaDominio pasan de una a otra.
  *
- * Es distinta de la entidad del dominio: los datos de la base no cruzan hacia
- * los círculos interiores. Los métodos desde/haciaDominio hacen la conversión.
- * Se conserva el nombre de tabla "avistamiento" para no perder los datos ya
- * guardados en data/. Hibernate accede a los campos directamente; los
- * setters se usan para sembrar datos en la prueba de integración.
+ * Mantengo el nombre de tabla "avistamiento" para no perder lo que ya estaba
+ * guardado en data/. Los setters solo los usa la prueba de integración para
+ * meter datos (Hibernate lee los campos directo).
  */
 @Entity
 @Table(name = "avistamiento")

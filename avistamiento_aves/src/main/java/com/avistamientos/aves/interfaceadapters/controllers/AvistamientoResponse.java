@@ -3,8 +3,8 @@ package com.avistamientos.aves.interfaceadapters.controllers;
 import com.avistamientos.aves.entities.Avistamiento;
 
 /**
- * JSON que devuelve la API para un avistamiento. Separa el formato HTTP de la
- * entidad del dominio: si el JSON cambia, la entidad no se entera.
+ * El JSON que devuelve la API. Lo dejé aparte de la entidad para que un
+ * cambio en el formato de respuesta no obligue a tocar el dominio.
  */
 public class AvistamientoResponse {
 
